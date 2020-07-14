@@ -58,7 +58,8 @@ video.addEventListener('play',async () =>{
      console.log("3");
    
     setInterval( async()=>{
-        const detections = await faceapi.detectSingleFace(video,new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors();
+        // const detections = await faceapi.detectSingleFace(video,new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors();
+        const detections = await faceapi.detectAllFaces(video,new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors();
          console.log("4");
         // console.log("detections");
         
@@ -110,7 +111,7 @@ function loadLabeledImages() {
             const descriptions = []
             for (let i = 1; i <= 2; i++) {
                 const img = await faceapi.fetchImage(`https://robertounocc.github.io/Api-face-WebCam2/perfiles/${label}/${i}.jpg`);
-                const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor();
+                const detections = await faceapi.detectAllFaces(img).withFaceLandmarks().withFaceDescriptor();
                 descriptions.push(detections.descriptor);
             }
 
