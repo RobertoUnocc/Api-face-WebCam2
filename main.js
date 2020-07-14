@@ -26,9 +26,10 @@ Promise.all([
     faceapi.nets.faceRecognitionNet.loadFromUri('./models'),
     faceapi.nets.faceLandmark68Net.loadFromUri('./models'),
     faceapi.nets.ssdMobilenetv1.loadFromUri('./models'),
+    
     faceapi.nets.tinyFaceDetector.loadFromUri('./models'),
-    faceapi.nets.faceExpressionNet.loadFromUri('./models'),
-    faceapi.nets.ageGenderNet.loadFromUri('./models')
+    
+    faceapi.nets.faceExpressionNet.loadFromUri('./models')
     ]).then(startVideo)
 // Abrir la webCam cuando se reconoce a todos los modelos
 
@@ -92,12 +93,12 @@ video.addEventListener('play',async () =>{
 // ***************************
 function loadLabeledImages() {
     // const labels = ['Roberto Carlos','Luis Fernando','Elvis Pernia']
-    const labels = ['Roberto Carlos','Luis Fernando']
+    const labels = ['Roberto Carlos']
     return Promise.all(
         labels.map(async label => {
             const descriptions = []
             for (let i = 1; i <= 2; i++) {
-                const img = await faceapi.fetchImage(`https://robertounocc.github.io/Api-face-WebCam/perfiles/${label}/${i}.jpg`);
+                const img = await faceapi.fetchImage(`https://robertounocc.github.io/Api-face-WebCam2/perfiles/${label}/${i}.jpg`);
                 const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor();
                 descriptions.push(detections.descriptor);
             }
