@@ -48,37 +48,48 @@ video.addEventListener('play',async () =>{
     // *****************************
 
     const canvas=faceapi.createCanvasFromMedia(video);
+    console.log(1);
     document.body.append(canvas);
+     console.log(2);
     // dibujamos el objeto
     const displaySize = {width:video.width, height:video.height};
     // El video tendria el canvas poe encima con el mismo tamaño
     faceapi.matchDimensions(canvas,displaySize);
+     console.log(3);
    
     setInterval( async()=>{
-        const detections = await faceapi.detectAllFaces(video,new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors();;
+        const detections = await faceapi.detectSingleFace(video,new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors();
+         console.log(4);
         // console.log(detections);
         
         // ahora redireccionamos el tamaño del Canvas
         const resizedDetections=await faceapi.resizeResults(detections,displaySize);
+         console.log(5);
 
         
          
         // -----------------------------------------------------
         // limpiar
         canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height);
+         console.log(6);
         // Pintamos
         faceapi.draw.drawDetections(canvas,resizedDetections);
+         console.log(7);
         faceapi.draw.drawFaceLandmarks(canvas,resizedDetections);
+         console.log(8);
         // -----------------------------------------------------
 
          const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor));
+          console.log(9);
        
         results.forEach((result, i) => {
+             console.log(10);
           const box = resizedDetections[i].detection.box;
           const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() });
           drawBox.draw(canvas);
           console.log(drawBox.options.label);
           console.log(typeof(drawBox.options.label));
+          console.log(11);
         })
         
     },1000)
